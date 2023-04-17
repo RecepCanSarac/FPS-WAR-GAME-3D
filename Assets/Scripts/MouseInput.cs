@@ -11,6 +11,7 @@ public class MouseInput : MonoBehaviour
     void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     // Update is called once per frame
