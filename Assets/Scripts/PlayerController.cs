@@ -8,7 +8,15 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
 
     public float gravity = -9.81f;
-    private Vector3 gravityVector; 
+    private Vector3 gravityVector;
+
+    //GroundCheck
+    public Transform groundCheckPoint;
+    public float groundCheckRadius = 0.35f;
+    public LayerMask groundLayer;
+
+    public bool isGrounded;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -22,5 +30,13 @@ public class PlayerController : MonoBehaviour
 
         gravityVector.y -= gravity * Time.deltaTime;
         characterController.Move(gravityVector * Time.deltaTime);
+
+        isGrounded = Physics.CheckSphere(groundCheckPoint.position,groundCheckRadius,groundLayer);
+
+        if (isGrounded && gravityVector.y < 0)
+        {
+            gravityVector.y = -3f;
+        }
     }
 }
+ 
