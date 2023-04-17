@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded;
 
+    public float jumpSpeed = 7f;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -36,6 +38,11 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && gravityVector.y < 0)
         {
             gravityVector.y = -3f;
+        }
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            gravityVector.y  = jumpSpeed;
         }
     }
 }
