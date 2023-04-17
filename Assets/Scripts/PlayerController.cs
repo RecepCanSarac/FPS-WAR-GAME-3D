@@ -27,13 +27,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MovePlayer();
+        GroundCheck();
+        JumpAndGravity();
+    }
+    void MovePlayer()
+    {
         Vector3 moveVector = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         characterController.Move(moveVector * speed * Time.deltaTime);
+    }
+    void GroundCheck()
+    {
+        isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundLayer);
+    }
 
+    void JumpAndGravity()
+    {
         gravityVector.y -= gravity * Time.deltaTime;
         characterController.Move(gravityVector * Time.deltaTime);
 
-        isGrounded = Physics.CheckSphere(groundCheckPoint.position,groundCheckRadius,groundLayer);
 
         if (isGrounded && gravityVector.y < 0)
         {
@@ -42,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
-            gravityVector.y  = jumpSpeed;
+            gravityVector.y = jumpSpeed;
         }
     }
 }
